@@ -1,1 +1,3 @@
 # URLshortener
+
+npm dev start
