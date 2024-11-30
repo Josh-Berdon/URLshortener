@@ -28,12 +28,35 @@
         <% shortUrls.forEach(shortUrl => { %>
           <tr>
             <td><a href="<%= shortUrl.full %>"><%= shortUrl.full %></a></td>
-            <td><a href="<%= shortUrl.short %>"><%= shortUrl.short %></a></td>
-            <td><%= shortUrl.clicks %></td>
+            <td><a href="/<%= shortUrl.short %>" class="short-url-link" data-id="<%= shortUrl.short %>"><%= shortUrl.short %></a></td>
+            <td><span id="click-count-<%= shortUrl.short %>"><%= shortUrl.clicks %></span></td>
           </tr>
         <% }) %>
       </tbody>
     </table>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const links = document.querySelectorAll('.short-url-link');
+      links.forEach(link => {
+        link.addEventListener('click', async (event) => {
+          event.preventDefault();
+          const urlId = link.dataset.id;
+          try {
+            const response = await fetch(`/update-click-count/${urlId}`, {
+              method: 'POST'
+            });
+            if (response.ok) {
+              const data = await response.json();
+              document.querySelector(`#click-count-${urlId}`).innerText = data.clicks;
+            }
+            window.location.href = link.href;
+          } catch (error) {
+            console.error('Error updating click count:', error);
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

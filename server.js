@@ -36,5 +36,17 @@ app.get('/:shortUrl', async (req, res) => {
   res.redirect(shortUrl.full)
 })
 
+//route to handle the click count for the shortened url
+app.post('/update-click-count/:id', async (req, res) => {
+  const shortUrl = await ShortUrl.findOne({ short: req.params.id });
+  if (shortUrl) {
+    shortUrl.clicks++;
+    await shortUrl.save();
+    res.status(200).send({ clicks: shortUrl.clicks });
+  } else {
+    res.status(404).send('URL not found');
+  }
+});
+
 //starting server to listen on port 5000
 app.listen(process.env.PORT || 5000);
