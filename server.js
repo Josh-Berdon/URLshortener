@@ -5,9 +5,14 @@ const ShortUrl = require('./models/shortUrl')
 const app = express()
 
 //connecting to db
-mongoose.connect('mongodb://localhost/urlShortener', {
-  useNewUrlParser: true, useUnifiedTopology: true
-})
+const dbURI = mongodb+srv://joshberdon:Berdon22@cluster0.5lm6g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0;
+ 
+mongoose.connect(dbURI).then(() => {
+  console.log('Connected to DocumentDB');
+}).catch(err => {
+  console.error('Error connecting to DocumentDB', err);
+});
+
 
 app.set('view engine', 'ejs')//rendering html elements
 app.use(express.urlencoded({ extended: false }))
@@ -49,4 +54,7 @@ app.post('/update-click-count/:id', async (req, res) => {
 });
 
 //starting server to listen on port 5000
-app.listen(process.env.PORT || 5000);
+// starting server to listen on port 5000
+app.listen(process.env.PORT || 5000, () => {
+  console.log('Server is running on port 5000');
+});
