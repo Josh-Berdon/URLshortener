@@ -53,7 +53,7 @@ app.post('/update-click-count/:id', async (req, res) => {
   }
 });
 
-// Starting server to listen on port 5000
-app.listen(5000, () => {
-  console.log('Server is running on port 5000');
+// Starting server to listen on port specified by Heroku or default to 5000
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`Server is running on port ${process.env.PORT || 5000}`);
 });
