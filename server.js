@@ -5,12 +5,12 @@ const ShortUrl = require('./models/shortUrl')
 const app = express()
 
 //connecting to db
-const dbURI = mongodb+srv://joshberdon:Berdon22@cluster0.5lm6g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0;
+const dbURI = 'mongodb+srv://joshberdon:Berdon22@cluster0.5lm6g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
  
 mongoose.connect(dbURI).then(() => {
-  console.log('Connected to DocumentDB');
+  console.log('Connected to MongoDB Atlas');
 }).catch(err => {
-  console.error('Error connecting to DocumentDB', err);
+  console.error('Error connecting to MongoDB Atlas', err);
 });
 
 
@@ -53,8 +53,7 @@ app.post('/update-click-count/:id', async (req, res) => {
   }
 });
 
-//starting server to listen on port 5000
-// starting server to listen on port 5000
-app.listen(process.env.PORT || 5000, () => {
+// Starting server to listen on port 5000
+app.listen(5000, () => {
   console.log('Server is running on port 5000');
 });
